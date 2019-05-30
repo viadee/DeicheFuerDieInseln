@@ -1,0 +1,77 @@
+<html lang="de">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deiche für die Inseln - Beispiele</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1><a href="https://github.com/viadee/DeicheFuerDieInseln" target="_blank">Deiche für die Inseln - Beispiele</a></h1>
+    </div>
+    <div class="container">
+        <div class="buttons-container">
+            <h1>Anfragen</h1>
+            <h2>Frei zugängliche Ressource</h2>
+            <button onclick="request('get', 'produkt/suche')">Sende Request an Microservice (Get Produkt-Suche)</button>
+
+            <h2>Geschützte Ressource</h2>
+            <button onclick="request('get', 'produkt/katalog')">Sende Request an Microservice (Get Produkt-Katalog)</button>
+
+            <h2>Anmeldefunktionalität</h2>
+            <form action="/login" method="post">
+                <input type="text" name="username" id="username" value="admin">
+                <input type="text" name="password" id="password" value="secret">
+            </form>
+            <button onclick="authenticate()">Sende Formbased Login</button>
+        </div>
+        <div class="ergebnis-container">
+            <h1>Ergebnis</h1>
+            <div id="ergebnis">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function authenticate() {
+            let username = document.getElementById('username').value;
+            let password = document.getElementById('password').value;
+            let body = `username=${username}&password=${password}`;
+
+            fetch('http://localhost:8000/login', {
+                method: 'post',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: body
+            }).then(function (response) {
+                let ergebnisBereich = document.getElementById('ergebnis');
+                if (response.status === 200) {
+                    ergebnisBereich.innerHTML = '<p>Anmeldung erfolgreich</p>';
+                } else {
+                    ergebnisBereich.innerHTML = '<p>Bei der Anmeldung ist ein Fehler aufgetreten</p>';
+                }
+            });
+        }
+
+        function request(method, pfad) {
+            fetch(`http://localhost:8000/${pfad}`, {
+                method: method
+            }).then(function (response) {
+                let ergebnisBereich = document.getElementById('ergebnis');
+                if (response.status === 200) {
+                    response.json().then(content => {
+                        ergebnisBereich.innerHTML = `<pre>${JSON.stringify(content, undefined, 2)}</pre>`;
+                    });
+                } else {
+                    ergebnisBereich.innerHTML = `<p>Auf die Resource konnte nicht zugegriffen werden. Fehler: ${response.status}</p>`;
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

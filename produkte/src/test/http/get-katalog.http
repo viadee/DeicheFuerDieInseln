@@ -1,0 +1,4 @@
+GET http://localhost:8002/katalog
+Authorization: Bearer 6971011c-e91b-470a-ae0c-e82d314465d2
+
+###

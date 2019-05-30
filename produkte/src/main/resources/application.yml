@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: produkte
+
+security:
+  oauth2:
+    # Configuration of access to authorization server.
+    # Normally, this will be configured externally.
+    resource:
+      token-info-uri: http://localhost:8001/oauth/check_token
+    client:
+      client-id: produkte
+      client-secret: secret
+
+server:
+  port: 8002

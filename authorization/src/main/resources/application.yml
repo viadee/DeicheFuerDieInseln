@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: authorization
+
+server:
+  port: 8001

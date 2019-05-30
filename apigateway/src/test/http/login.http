@@ -1,0 +1,9 @@
+POST http://localhost:8000/login
+Content-Type: application/x-www-form-urlencoded
+Cookie: XSRF-TOKEN=b698881d-0d9b-4845-8011-b1df8cf4a628
+X-XSRF-TOKEN: b698881d-0d9b-4845-8011-b1df8cf4a628
+
+username=admin&password=secret
+
+###
+
